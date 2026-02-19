@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hossam Srf  Srf  Srf  — Graphic Design & Visual Content Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN DIRECTION: Cinematic dark luxury — noir meets future.
+   Like a film grade applied to editorial design. Deep blacks,
+   warm gold accents, electric blue highlights. Feels premium,
+   human, and technologically forward all at once.
+   ============================================================ */
+:root {
+  --ink:       #080810;
+  --ink2:      #0d0d18;
+  --ink3:      #121224;
+  --surface:   rgba(255,255,255,0.035);
+  --surface2:  rgba(255,255,255,0.06);
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.12);
+
+  --gold:      #d4a843;
+  --gold-lt:   #f0c060;
+  --gold-dim:  rgba(212,168,67,0.15);
+  --blue:      #3b82f6;
+  --blue-lt:   #60a5fa;
+  --blue-dim:  rgba(59,130,246,0.12);
+  --rose:      #e8506a;
+
+  --text:      #f2f0ea;
+  --text-mid:  #a09888;
+  --text-low:  #5a5248;
+
+  --grad-gold: linear-gradient(135deg, #c49830, #f0c060, #c49830);
+  --grad-blue: linear-gradient(135deg, #2563eb, #60a5fa);
+  --grad-hero: linear-gradient(135deg, #d4a843 0%, #3b82f6 50%, #e8506a 100%);
+  --grad-mix:  linear-gradient(135deg, var(--gold), var(--blue-lt));
+
+  --ff-display: 'Playfair Display', Georgia, serif;
+  --ff-body:    'Outfit', sans-serif;
+
+  --nav-h: 68px;
+  --r:     14px;
+  --r-sm:  9px;
+  --ease:  cubic-bezier(0.4, 0, 0.2, 1);
+  --t:     0.3s var(--ease);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  background: var(--ink);
+  color: var(--text);
+  line-height: 1.65;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ============================================================
+   CURSOR
+   ============================================================ */
+#cur { position:fixed; width:10px; height:10px; background:var(--gold); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .2s,height .2s,background .2s; mix-blend-mode:screen; }
+#cur-r { position:fixed; width:36px; height:36px; border:1px solid rgba(212,168,67,.45); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); }
+body:has(a:hover,button:hover) #cur { width:16px; height:16px; background:var(--blue-lt); }
+body:has(a:hover,button:hover) #cur-r { width:52px; height:52px; border-color:rgba(59,130,246,.35); }
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--ink); }
+::-webkit-scrollbar-thumb { background:var(--gold); border-radius:3px; }
+
+/* ============================================================
+   NOISE + GRAIN overlay
+   ============================================================ */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9997;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap { max-width:1200px; margin:0 auto; padding:0 28px; }
+.section { padding:108px 0; position:relative; z-index:1; }
+
+.label {
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--ff-body); font-size:10.5px; font-weight:700;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--gold);
+  margin-bottom:18px;
+}
+.label::before { content:''; display:block; width:24px; height:1px; background:var(--gold); }
+
+.h2 {
+  font-family:var(--ff-display); font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:900; line-height:1.12; margin-bottom:14px;
+}
+.grad-text {
+  background:var(--grad-mix);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+#nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  height:var(--nav-h); display:flex; align-items:center;
+  transition:var(--t);
+}
+#nav.scrolled {
+  background:rgba(8,8,16,.88);
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  border-bottom:1px solid var(--border);
+}
+.nav-in { display:flex; align-items:center; justify-content:space-between; width:100%; }
+.logo {
+  font-family:var(--ff-display); font-weight:900; font-size:20px;
+  letter-spacing:-.02em;
+  background:var(--grad-gold);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.nav-links { display:flex; align-items:center; gap:2px; }
+.nav-links a {
+  padding:8px 13px; font-size:13px; font-weight:500;
+  color:var(--text-mid); border-radius:8px; transition:var(--t);
+}
+.nav-links a:hover { color:var(--text); background:var(--surface); }
+.hire-btn {
+  margin-left:10px !important; padding:9px 22px !important;
+  background:var(--gold) !important; color:var(--ink) !important;
+  font-weight:700 !important; font-size:12.5px !important;
+  border-radius:50px !important; letter-spacing:.04em;
+  transition:var(--t) !important; position:relative;
+}
+.hire-btn:hover { background:var(--gold-lt) !important; transform:translateY(-1px); box-shadow:0 6px 24px rgba(212,168,67,.4); }
+
+/* Hamburger */
+.burger {
+  display:none; flex-direction:column; gap:5px; cursor:pointer;
+  padding:8px; border-radius:8px; background:var(--surface);
+  border:1px solid var(--border);
+}
+.burger span { display:block; width:20px; height:1.5px; background:var(--text); border-radius:2px; transition:var(--t); }
+.burger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity:0; }
+.burger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+
+.mob-nav {
+  position:fixed; top:var(--nav-h); inset-inline:0;
+  background:rgba(8,8,16,.96); backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  padding:20px 28px; display:flex; flex-direction:column; gap:6px;
+  transform:translateY(-115%); opacity:0;
+  transition:transform .4s var(--ease), opacity .3s;
+  z-index:999;
+}
+.mob-nav.open { transform:translateY(0); opacity:1; }
+.mob-nav a { padding:12px 14px; font-size:15px; font-weight:500; color:var(--text-mid); border-radius:10px; transition:var(--t); }
+.mob-nav a:hover { color:var(--text); background:var(--surface); }
+.mob-hire { margin-top:8px; text-align:center; padding:14px; background:var(--gold); color:var(--ink); font-weight:700; border-radius:50px; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  min-height:100vh; display:flex; align-items:center;
+  padding-top:var(--nav-h); position:relative; overflow:hidden;
+}
+
+/* Cinematic background: dark vignette + warm glow */
+.hero-bg {
+  position:absolute; inset:0; z-index:0;
+}
+.hero-bg::before {
+  content:'';
+  position:absolute; width:900px; height:900px;
+  top:-250px; right:-150px;
+  background:radial-gradient(ellipse, rgba(212,168,67,.07) 0%, transparent 65%);
+  animation:bg1 10s ease-in-out infinite;
+}
+.hero-bg::after {
+  content:'';
+  position:absolute; width:700px; height:700px;
+  bottom:-150px; left:-100px;
+  background:radial-gradient(ellipse, rgba(59,130,246,.09) 0%, transparent 65%);
+  animation:bg2 13s ease-in-out infinite;
+}
+@keyframes bg1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-40px,30px) scale(1.08)} }
+@keyframes bg2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-40px) scale(1.06)} }
+
+/* Diagonal grid lines */
+.hero-lines {
+  position:absolute; inset:0;
+  background-image:repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 80px,
+    rgba(255,255,255,.014) 80px,
+    rgba(255,255,255,.014) 81px
+  );
+}
+
+.hero-in {
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:60px; align-items:center;
+}
+
+/* Left */
+.hero-text {}
+.hero-avail {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:5px 14px 5px 7px; border-radius:50px;
+  border:1px solid rgba(212,168,67,.25);
+  background:rgba(212,168,67,.08);
+  font-size:12px; font-weight:600; color:var(--gold);
+  margin-bottom:28px;
+}
+.pulse { width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 8px var(--gold); animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+.hero-name {
+  font-family:var(--ff-display);
+  font-size:clamp(3rem,6.5vw,5.5rem);
+  font-weight:900; line-height:1.0;
+  letter-spacing:-.03em;
+  margin-bottom:6px;
+}
+.hero-role {
+  font-family:var(--ff-display); font-style:italic;
+  font-size:clamp(1.2rem,2.5vw,2rem);
+  font-weight:700; color:transparent;
+  background:var(--grad-mix);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:28px; line-height:1.3;
+}
+.hero-bio {
+  font-size:15.5px; line-height:1.75; color:var(--text-mid);
+  max-width:480px; margin-bottom:40px; font-weight:300;
+}
+.hero-bio strong { color:var(--text); font-weight:600; }
+
+.hero-btns { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.btn-gold {
+  display:inline-flex; align-items:center; gap:9px;
+  padding:15px 34px; background:var(--gold); color:var(--ink);
+  font-family:var(--ff-body); font-weight:700; font-size:14px;
+  border-radius:50px; border:none; cursor:pointer;
+  transition:var(--t); letter-spacing:.03em;
+  box-shadow:0 0 0 0 rgba(212,168,67,.4);
+}
+.btn-gold:hover { background:var(--gold-lt); transform:translateY(-2px); box-shadow:0 8px 32px rgba(212,168,67,.35); }
+.btn-ghost {
+  display:inline-flex; align-items:center; gap:9px;
+  padding:14px 30px;
+  border:1px solid var(--border2); color:var(--text-mid);
+  font-family:var(--ff-body); font-weight:500; font-size:14px;
+  border-radius:50px; background:transparent; cursor:pointer;
+  transition:var(--t);
+}
+.btn-ghost:hover { border-color:var(--gold); color:var(--gold); background:var(--gold-dim); }
+
+/* Right — identity card */
+.hero-card {
+  position:relative;
+}
+.id-card {
+  border-radius:24px;
+  border:1px solid var(--border2);
+  background:linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  padding:36px; overflow:hidden;
+  animation:cardFloat 6s ease-in-out infinite;
+}
+@keyframes cardFloat { 0%,100%{transform:translateY(0) rotate(.5deg)} 50%{transform:translateY(-12px) rotate(-.5deg)} }
+.id-card::before {
+  content:'';
+  position:absolute; top:-1px; left:0; right:0; height:2px;
+  background:var(--grad-hero); border-radius:2px 2px 0 0;
+}
+
+.id-initials {
+  width:80px; height:80px; border-radius:20px;
+  background:var(--grad-mix); display:flex; align-items:center; justify-content:center;
+  font-family:var(--ff-display); font-weight:900; font-size:32px; color:var(--ink);
+  margin-bottom:20px;
+}
+.id-name { font-family:var(--ff-display); font-size:26px; font-weight:900; margin-bottom:4px; }
+.id-title { font-size:13px; color:var(--gold); font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:20px; }
+
+.id-badges { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+.badge {
+  padding:5px 13px; border-radius:20px; font-size:11px; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase;
+}
+.badge-gold { background:rgba(212,168,67,.15); color:var(--gold); border:1px solid rgba(212,168,67,.25); }
+.badge-blue { background:var(--blue-dim); color:var(--blue-lt); border:1px solid rgba(59,130,246,.2); }
+.badge-rose { background:rgba(232,80,106,.12); color:#f07a8a; border:1px solid rgba(232,80,106,.2); }
+
+.id-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.id-stat {
+  padding:14px; border-radius:12px;
+  background:rgba(255,255,255,.04); border:1px solid var(--border);
+}
+.id-stat-n { font-family:var(--ff-display); font-size:22px; font-weight:900; color:var(--gold-lt); line-height:1; }
+.id-stat-l { font-size:11px; color:var(--text-low); text-transform:uppercase; letter-spacing:.1em; margin-top:3px; }
+
+/* Floating accent chips */
+.f-chip {
+  position:absolute;
+  padding:8px 14px; border-radius:10px; font-size:11.5px; font-weight:700;
+  background:rgba(8,8,16,.85); backdrop-filter:blur(12px);
+  border:1px solid var(--border2); color:var(--text-mid);
+}
+.fc1 { top:-16px; right:20px; animation:flt1 4s ease-in-out infinite; color:var(--blue-lt); }
+.fc2 { bottom:-16px; left:10px; animation:flt2 5s ease-in-out infinite; color:var(--gold); }
+@keyframes flt1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes flt2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+/* ============================================================
+   ABOUT / SKILLS
+   ============================================================ */
+#about { background:var(--ink2); }
+.about-in {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:80px; align-items:start;
+}
+.about-text .h2 { margin-bottom:20px; }
+.about-body { font-size:15px; line-height:1.8; color:var(--text-mid); font-weight:300; }
+.about-body p + p { margin-top:14px; }
+.about-body strong { color:var(--text); font-weight:600; }
+
+.edu-block { margin-top:36px; display:flex; flex-direction:column; gap:12px; }
+.edu-item {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px 18px; border-radius:12px;
+  border:1px solid var(--border); background:var(--surface);
+}
+.edu-icon {
+  width:36px; height:36px; border-radius:10px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--gold-dim); color:var(--gold);
+}
+.edu-title { font-size:13.5px; font-weight:700; color:var(--text); }
+.edu-sub { font-size:12px; color:var(--text-low); margin-top:2px; }
+
+/* Skills side */
+.skills-block {}
+.skill-group + .skill-group { margin-top:28px; }
+.sg-title {
+  font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--text-low); margin-bottom:12px;
+}
+.skill-pills { display:flex; flex-wrap:wrap; gap:8px; }
+.pill {
+  padding:7px 16px; border-radius:20px; font-size:12.5px; font-weight:600;
+  transition:var(--t); cursor:default;
+}
+.pill-g { background:rgba(212,168,67,.1); color:var(--gold); border:1px solid rgba(212,168,67,.2); }
+.pill-g:hover { background:rgba(212,168,67,.2); }
+.pill-b { background:var(--blue-dim); color:var(--blue-lt); border:1px solid rgba(59,130,246,.2); }
+.pill-b:hover { background:rgba(59,130,246,.2); }
+.pill-r { background:rgba(232,80,106,.1); color:#f07a8a; border:1px solid rgba(232,80,106,.18); }
+.pill-r:hover { background:rgba(232,80,106,.18); }
+
+/* ============================================================
+   PORTFOLIO
+   ============================================================ */
+#portfolio { background:var(--ink); }
+
+.filter-bar { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:44px; }
+.fb {
+  padding:8px 20px; border-radius:50px;
+  border:1px solid var(--border); background:transparent;
+  color:var(--text-mid); font-family:var(--ff-body); font-size:13px; font-weight:600;
+  cursor:pointer; transition:var(--t); letter-spacing:.03em;
+}
+.fb:hover { border-color:var(--gold-lt); color:var(--gold-lt); background:var(--gold-dim); }
+.fb.active { background:var(--gold); border-color:var(--gold); color:var(--ink); }
+
+.port-grid {
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:18px;
+}
+
+/* mosaic layout */
+.pi { position:relative; border-radius:var(--r); overflow:hidden; cursor:pointer; }
+.pi:nth-child(1)  { grid-column:span 7; aspect-ratio:16/9; }
+.pi:nth-child(2)  { grid-column:span 5; aspect-ratio:4/3; }
+.pi:nth-child(3)  { grid-column:span 4; aspect-ratio:4/5; }
+.pi:nth-child(4)  { grid-column:span 4; aspect-ratio:4/5; }
+.pi:nth-child(5)  { grid-column:span 4; aspect-ratio:4/5; }
+.pi:nth-child(6)  { grid-column:span 5; aspect-ratio:4/3; }
+.pi:nth-child(7)  { grid-column:span 7; aspect-ratio:16/9; }
+.pi:nth-child(8)  { grid-column:span 6; aspect-ratio:16/9; }
+.pi:nth-child(9)  { grid-column:span 6; aspect-ratio:16/9; }
+
+.pi[data-h="true"] { display:none; }
+
+.pi-bg {
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .6s var(--ease);
+}
+.pi:hover .pi-bg { transform:scale(1.07); }
+
+/* Colored placeholder bg palettes */
+.pb1 { background:linear-gradient(145deg,#0a001a,#2a0a4a,#060012); }
+.pb2 { background:linear-gradient(145deg,#001428,#003060,#000a18); }
+.pb3 { background:linear-gradient(145deg,#1a0800,#4a1c00,#0a0400); }
+.pb4 { background:linear-gradient(145deg,#001a10,#004030,#000e08); }
+.pb5 { background:linear-gradient(145deg,#1a0010,#480030,#0a0008); }
+.pb6 { background:linear-gradient(145deg,#0a0a00,#2a2800,#050500); }
+.pb7 { background:linear-gradient(145deg,#00081a,#001840,#000410); }
+.pb8 { background:linear-gradient(145deg,#1a0818,#440038,#0a0010); }
+.pb9 { background:linear-gradient(145deg,#001010,#003840,#000808); }
+
+/* SVG decorations for cards */
+.pi-deco { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:.55; pointer-events:none; }
+
+.pi-over {
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(8,8,16,.95) 0%, rgba(8,8,16,.3) 55%, transparent 100%);
+  display:flex; flex-direction:column; justify-content:flex-end; padding:22px;
+  opacity:0; transition:opacity .35s ease;
+}
+.pi:hover .pi-over { opacity:1; }
+
+.pi-glass {
+  background:rgba(8,8,16,.55);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-sm); padding:14px 18px;
+  transform:translateY(10px); transition:transform .35s var(--ease) .04s;
+}
+.pi:hover .pi-glass { transform:translateY(0); }
+.pi-cat { font-size:9.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:3px; }
+.pi-title { font-family:var(--ff-display); font-size:14px; font-weight:700; color:var(--text); line-height:1.25; }
+.pi-view {
+  display:inline-flex; align-items:center; gap:5px;
+  margin-top:8px; font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--blue-lt);
+  transition:gap .2s;
+}
+.pi:hover .pi-view { gap:9px; }
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+#services { background:var(--ink2); }
+.services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:56px; }
+.svc-card {
+  padding:32px; border-radius:var(--r);
+  border:1px solid var(--border); background:var(--surface);
+  position:relative; overflow:hidden; transition:var(--t);
+}
+.svc-card::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+  transform:scaleX(0); transform-origin:left; transition:transform .4s;
+}
+.svc-card:hover::after { transform:scaleX(1); }
+.svc-card:hover { border-color:rgba(255,255,255,.14); background:var(--surface2); transform:translateY(-4px); box-shadow:0 18px 48px rgba(0,0,0,.4); }
+
+.svc-card.c-gold::after { background:var(--grad-gold); }
+.svc-card.c-blue::after { background:var(--grad-blue); }
+.svc-card.c-rose::after { background:linear-gradient(135deg,#e8506a,#f09060); }
+
+.svc-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:22px; }
+.svc-icon.ig { background:var(--gold-dim); color:var(--gold); }
+.svc-icon.ib { background:var(--blue-dim); color:var(--blue-lt); }
+.svc-icon.ir { background:rgba(232,80,106,.1); color:#f07a8a; }
+
+.svc-title { font-family:var(--ff-display); font-size:19px; font-weight:700; margin-bottom:10px; }
+.svc-desc { font-size:14px; line-height:1.7; color:var(--text-mid); }
+.svc-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:18px; }
+.svc-tag { padding:4px 11px; border-radius:20px; font-size:11px; font-weight:600; }
+.svc-tag-g { background:rgba(212,168,67,.1); color:var(--gold); }
+.svc-tag-b { background:var(--blue-dim); color:var(--blue-lt); }
+.svc-tag-r { background:rgba(232,80,106,.1); color:#f07a8a; }
+
+/* ============================================================
+   ARTICLES
+   ============================================================ */
+#articles { background:var(--ink); }
+.art-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.art-card {
+  border-radius:var(--r); border:1px solid var(--border); background:var(--surface);
+  padding:30px; display:flex; flex-direction:column; gap:14px;
+  position:relative; overflow:hidden; transition:var(--t);
+}
+.art-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1.5px;
+  background:var(--grad-hero); transform:scaleX(0); transform-origin:left; transition:transform .45s;
+}
+.art-card:hover::before { transform:scaleX(1); }
+.art-card:hover { border-color:rgba(255,255,255,.13); background:var(--surface2); transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.35); }
+.art-n { font-family:var(--ff-display); font-size:52px; font-weight:900; color:rgba(255,255,255,.06); line-height:1; }
+.art-tag { display:inline-block; padding:4px 12px; border-radius:20px; font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+.at-g { background:var(--gold-dim); color:var(--gold); border:1px solid rgba(212,168,67,.25); }
+.at-b { background:var(--blue-dim); color:var(--blue-lt); border:1px solid rgba(59,130,246,.2); }
+.at-r { background:rgba(232,80,106,.1); color:#f07a8a; border:1px solid rgba(232,80,106,.18); }
+.art-title { font-family:var(--ff-display); font-size:18px; font-weight:700; line-height:1.3; }
+.art-snip { font-size:13.5px; line-height:1.7; color:var(--text-mid); flex:1; }
+.read-more { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); transition:gap .2s; }
+.read-more:hover { gap:10px; }
+
+/* ============================================================
+   FREE RESOURCES
+   ============================================================ */
+#resources { background:var(--ink2); overflow:hidden; }
+.res-in { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+
+.res-vis { position:relative; height:440px; }
+.res-mockup {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:260px; border-radius:22px; overflow:hidden;
+  box-shadow:0 40px 90px rgba(0,0,0,.7); border:1px solid var(--border2);
+  animation:cardFloat 7s ease-in-out infinite;
+}
+.res-top {
+  height:170px; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(145deg,#1a0a00,#4a2800,var(--gold));
+  position:relative;
+}
+.res-top::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to bottom, transparent 50%, rgba(8,8,16,.9));
+}
+.res-top svg { position:relative; z-index:1; filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)); }
+.res-body { padding:20px 22px; background:#0d0d18; }
+.res-body-t { font-family:var(--ff-display); font-size:14px; font-weight:700; margin-bottom:4px; }
+.res-body-s { font-size:12px; color:var(--text-low); }
+
+.res-chip {
+  position:absolute; padding:10px 16px; border-radius:12px;
+  background:rgba(8,8,16,.88); backdrop-filter:blur(14px);
+  border:1px solid var(--border2); font-size:12px; font-weight:700;
+}
+.rc1 { top:30px; left:0; color:var(--gold); animation:flt1 4s ease-in-out infinite; }
+.rc2 { bottom:40px; right:0; color:var(--blue-lt); animation:flt2 5s ease-in-out infinite; }
+
+.res-text .h2 { margin-bottom:12px; }
+.res-desc { font-size:15px; line-height:1.75; color:var(--text-mid); margin-bottom:28px; font-weight:300; }
+.res-feats { display:flex; flex-direction:column; gap:10px; margin-bottom:32px; }
+.res-feat { display:flex; align-items:center; gap:12px; font-size:13.5px; color:var(--text-mid); }
+.res-feat-ic { width:26px; height:26px; border-radius:8px; background:var(--gold-dim); border:1px solid rgba(212,168,67,.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--gold); }
+
+.dl-form { display:flex; gap:10px; flex-wrap:wrap; }
+.em-in {
+  flex:1; min-width:200px; padding:13px 18px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:50px; color:var(--text); font-family:var(--ff-body); font-size:13.5px;
+  outline:none; transition:border-color .3s, box-shadow .3s;
+}
+.em-in::placeholder { color:var(--text-low); }
+.em-in:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(212,168,67,.12); }
+.dl-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:13px 26px; background:var(--gold); color:var(--ink);
+  font-family:var(--ff-body); font-size:13.5px; font-weight:700;
+  border-radius:50px; border:none; cursor:pointer; transition:var(--t);
+}
+.dl-btn:hover { background:var(--gold-lt); transform:translateY(-2px); box-shadow:0 8px 28px rgba(212,168,67,.35); }
+.dl-ok { display:none; align-items:center; gap:9px; font-size:13.5px; color:var(--gold); font-weight:600; margin-top:12px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer { background:#040408; border-top:1px solid var(--border); padding:60px 0 30px; }
+.foot-in { display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+.foot-brand .logo { display:inline-block; margin-bottom:14px; font-size:22px; }
+.foot-brand p { font-size:13.5px; line-height:1.7; color:var(--text-mid); max-width:270px; }
+.foot-head { font-size:10.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--text-low); margin-bottom:18px; }
+.foot-links { display:flex; flex-direction:column; gap:9px; }
+.foot-links a { font-size:13.5px; color:var(--text-mid); transition:color .2s; }
+.foot-links a:hover { color:var(--text); }
+.foot-contact { display:flex; flex-direction:column; gap:10px; }
+.foot-contact a { font-size:13.5px; color:var(--text-mid); display:flex; align-items:center; gap:9px; transition:color .2s; }
+.foot-contact a:hover { color:var(--gold); }
+
+.foot-bottom { border-top:1px solid var(--border); padding-top:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+.foot-copy { font-size:12.5px; color:var(--text-low); }
+.socials { display:flex; gap:8px; }
+.sl {
+  width:34px; height:34px; border-radius:9px;
+  border:1px solid var(--border); background:var(--surface);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--text-mid); transition:var(--t);
+}
+.sl:hover { border-color:var(--gold); color:var(--gold); background:var(--gold-dim); transform:translateY(-2px); }
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.rev { opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.rev.vis { opacity:1; transform:translateY(0); }
+.rd1 { transition-delay:.1s; }
+.rd2 { transition-delay:.2s; }
+.rd3 { transition-delay:.3s; }
+.rd4 { transition-delay:.4s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1024px) {
+  .hero-in { grid-template-columns:1fr; gap:48px; }
+  .hero-stats-row { position:static; margin-top:40px; flex-direction:row; }
+  .about-in { grid-template-columns:1fr; gap:40px; }
+  .port-grid { grid-template-columns:repeat(2,1fr); }
+  .pi { grid-column:span 1 !important; aspect-ratio:4/3 !important; }
+  .port-grid { display:grid; grid-template-columns:1fr 1fr; }
+  .services-grid { grid-template-columns:1fr 1fr; }
+  .res-in { grid-template-columns:1fr; gap:48px; }
+  .res-vis { height:300px; }
+}
+@media (max-width:768px) {
+  :root { --nav-h:62px; }
+  .nav-links { display:none; }
+  .burger { display:flex; }
+  .section { padding:72px 0; }
+  .services-grid { grid-template-columns:1fr; }
+  .art-grid { grid-template-columns:1fr; }
+  .foot-in { grid-template-columns:1fr; gap:28px; }
+  .hero-btns { flex-direction:column; align-items:flex-start; }
+}
+@media (max-width:520px) {
+  .id-stats { grid-template-columns:1fr 1fr; }
+  .dl-form { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav id="nav">
+  <div class="wrap nav-in">
+    <a href="#hero" class="logo">Hossam Visauls</a>
+
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#services">Services</a>
+      <a href="#articles">Articles</a>
+      <a href="#resources">Free Resources</a>
+      <a href="#contact" class="hire-btn">Hire Me</a>
+    </div>
+
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mob-nav" id="mob-nav">
+  <a href="#hero" onclick="closeNav()">Home</a>
+  <a href="#about" onclick="closeNav()">About</a>
+  <a href="#portfolio" onclick="closeNav()">Portfolio</a>
+  <a href="#services" onclick="closeNav()">Services</a>
+  <a href="#articles" onclick="closeNav()">Articles</a>
+  <a href="#resources" onclick="closeNav()">Free Resources</a>
+  <a href="#contact" class="mob-hire" onclick="closeNav()">Hire Me</a>
+</div>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero" class="section">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+
+  <div class="wrap">
+    <div class="hero-in">
+      <!-- Text -->
+      <div class="hero-text">
+        <div class="hero-avail">
+          <span class="pulse"></span>
+          Available for freelance & collaboration
+        </div>
+
+        <h1 class="hero-name">Hossam Srf  Srf </h1>
+        <p class="hero-role">Graphic Design &amp; AI-Enhanced Visual Creator</p>
+
+        <p class="hero-bio">
+          Bridging <strong>strategic communication</strong> and <strong>cutting-edge visual art</strong>. I hold a Diploma in Graphic Production and a License in Information &amp; Communication — two pillars that make every design I craft both <strong>beautiful and purposeful</strong>.
+          <br><br>
+          Let's build the future of your brand together.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#portfolio" class="btn-gold">
+            View My Work
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contact" class="btn-ghost">
+            Let's Collaborate
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Identity Card -->
+      <div class="hero-card">
+        <div class="f-chip fc1">✦ AI-Enhanced Design</div>
+        <div class="f-chip fc2">🎬 Video &amp; Motion</div>
+
+        <div class="id-card">
+          <div class="id-initials">H</div>
+          <p class="id-name">Hossam Srf  Srf </p>
+          <p class="id-title">Graphic Designer · Video Creator · AI Specialist</p>
+
+          <div class="id-badges">
+            <span class="badge badge-gold">Graphic Design</span>
+            <span class="badge badge-blue">Video Editing</span>
+            <span class="badge badge-rose">AI Tools</span>
+            <span class="badge badge-gold">Branding</span>
+            <span class="badge badge-blue">Social Media</span>
+          </div>
+
+          <div class="id-stats">
+            <div class="id-stat">
+              <div class="id-stat-n">5+</div>
+              <div class="id-stat-l">Years Exp.</div>
+            </div>
+            <div class="id-stat">
+              <div class="id-stat-n">200+</div>
+              <div class="id-stat-l">Projects</div>
+            </div>
+            <div class="id-stat">
+              <div class="id-stat-n">80+</div>
+              <div class="id-stat-l">Clients</div>
+            </div>
+            <div class="id-stat">
+              <div class="id-stat-n">2</div>
+              <div class="id-stat-l">Degrees</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.hero-in -->
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section id="about" class="section">
+  <div class="wrap">
+    <div class="about-in">
+      <div class="about-text rev">
+        <p class="label">My Story</p>
+        <h2 class="h2">Where Strategy Meets <span class="grad-text">Visual Art</span></h2>
+        <div class="about-body">
+          <p>
+            I'm <strong>Hossam Srf  Srf </strong> — a graphic designer and visual content creator with a passion for work that lives at the intersection of <strong>traditional design craft</strong> and the <strong>future of technology</strong>.
+          </p>
+          <p>
+            My academic background gives me a rare dual advantage: a <strong>Diploma in Graphic Production</strong> trained my eye for layout, color, and visual composition, while a <strong>License in Information and Communication</strong> grounds my work in how messages are actually received and interpreted by real audiences.
+          </p>
+          <p>
+            I specialize in high-impact <strong>graphic design</strong>, <strong>dynamic video content</strong>, and <strong>AI-enhanced visuals</strong> that push the boundaries of what's imaginable. Whether it's defining a brand's visual soul through social media graphics and posters, or producing cinematic video edits — my goal is always the same: work that doesn't just look good, but <em>communicates a powerful message</em>.
+          </p>
+        </div>
+
+        <div class="edu-block">
+          <div class="edu-item rev rd1">
+            <div class="edu-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+            </div>
+            <div>
+              <p class="edu-title">Diploma in Graphic Production</p>
+              <p class="edu-sub">Visual layout, color theory, print & digital design fundamentals</p>
+            </div>
+          </div>
+          <div class="edu-item rev rd2">
+            <div class="edu-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div>
+              <p class="edu-title">License in Information &amp; Communication</p>
+              <p class="edu-sub">Strategic messaging, audience analysis, media theory</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="skills-block rev rd2">
+        <p class="label">Toolkit</p>
+        <h2 class="h2" style="font-size:clamp(1.6rem,3vw,2.2rem);">Skills &amp; <span class="grad-text">Expertise</span></h2>
+
+        <div style="margin-top:28px;">
+          <div class="skill-group">
+            <p class="sg-title">Graphic Design</p>
+            <div class="skill-pills">
+              <span class="pill pill-g">Poster Design</span>
+              <span class="pill pill-g">Social Media Graphics</span>
+              <span class="pill pill-g">Brand Identity</span>
+              <span class="pill pill-g">Typography</span>
+              <span class="pill pill-g">Color Theory</span>
+            </div>
+          </div>
+
+          <div class="skill-group" style="margin-top:20px;">
+            <p class="sg-title">Video & Motion</p>
+            <div class="skill-pills">
+              <span class="pill pill-b">Video Editing</span>
+              <span class="pill pill-b">Cinematic Edits</span>
+              <span class="pill pill-b">Motion Graphics</span>
+              <span class="pill pill-b">Reels & Shorts</span>
+            </div>
+          </div>
+
+          <div class="skill-group" style="margin-top:20px;">
+            <p class="sg-title">AI & Technology</p>
+            <div class="skill-pills">
+              <span class="pill pill-r">AI Image Generation</span>
+              <span class="pill pill-r">Prompt Engineering</span>
+              <span class="pill pill-r">AI Video Tools</span>
+              <span class="pill pill-r">Workflow Automation</span>
+            </div>
+          </div>
+
+          <div class="skill-group" style="margin-top:20px;">
+            <p class="sg-title">Software</p>
+            <div class="skill-pills">
+              <span class="pill pill-g">Photoshop</span>
+              <span class="pill pill-g">Illustrator</span>
+              <span class="pill pill-g">Premiere Pro</span>
+              <span class="pill pill-b">After Effects</span>
+              <span class="pill pill-b">Canva Pro</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PORTFOLIO
+     ============================================================ -->
+<section id="portfolio" class="section">
+  <div class="wrap">
+    <p class="label rev">Selected Work</p>
+    <h2 class="h2 rev rd1">Designed with <span class="grad-text">Purpose</span></h2>
+    <p class="rev rd2" style="color:var(--text-mid);font-size:15px;max-width:460px;margin-bottom:40px;">A cross-section of graphic design, video content, and AI-enhanced visuals — each piece built to communicate and captivate.</p>
+
+    <div class="filter-bar rev rd3">
+      <button class="fb active" data-f="all">All</button>
+      <button class="fb" data-f="social">Social Media</button>
+      <button class="fb" data-f="sports">Sports Posters</button>
+      <button class="fb" data-f="branding">Branding</button>
+      <button class="fb" data-f="video">Video</button>
+    </div>
+
+    <div class="port-grid" id="pg">
+
+      <div class="pi" data-c="social">
+        <div class="pi-bg pb1">
+          <div class="pi-deco">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="38" stroke="rgba(212,168,67,.5)" stroke-width="1.5" stroke-dasharray="6 4"/>
+              <circle cx="50" cy="50" r="22" fill="rgba(212,168,67,.18)"/>
+              <path d="M38 50 L45 40 L55 40 L62 50 L55 60 L45 60Z" fill="rgba(212,168,67,.4)" stroke="rgba(212,168,67,.7)" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Social Media</p>
+          <p class="pi-title">Luxury Brand — Instagram Story Series</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+      <div class="pi" data-c="sports">
+        <div class="pi-bg pb2">
+          <div class="pi-deco">
+            <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+              <polygon points="45,10 80,70 10,70" stroke="rgba(59,130,246,.6)" stroke-width="1.5" fill="rgba(59,130,246,.1)"/>
+              <circle cx="45" cy="50" r="14" fill="rgba(59,130,246,.3)"/>
+              <line x1="45" y1="10" x2="45" y2="50" stroke="rgba(59,130,246,.4)" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Sports Poster</p>
+          <p class="pi-title">Champions League Night — Match Poster</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+      <div class="pi" data-c="branding">
+        <div class="pi-bg pb3">
+          <div class="pi-deco">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <rect x="16" y="16" width="48" height="48" rx="10" stroke="rgba(255,107,53,.55)" stroke-width="1.5" fill="rgba(255,107,53,.08)"/>
+              <rect x="28" y="28" width="24" height="24" rx="5" fill="rgba(255,107,53,.35)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Branding</p>
+          <p class="pi-title">Artisan Food Co. — Full Brand Identity</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+      <div class="pi" data-c="video">
+        <div class="pi-bg pb4">
+          <div class="pi-deco">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="40" r="32" stroke="rgba(50,200,120,.45)" stroke-width="1.5" fill="rgba(50,200,120,.06)"/>
+              <polygon points="32,28 58,40 32,52" fill="rgba(50,200,120,.5)" stroke="rgba(50,200,120,.7)" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Video Content</p>
+          <p class="pi-title">Cinematic Brand Intro — Reel Edit</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+      <div class="pi" data-c="social">
+        <div class="pi-bg pb5">
+          <div class="pi-deco">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <path d="M10 40 L40 10 L70 40 L40 70Z" stroke="rgba(200,60,180,.5)" stroke-width="1.5" fill="rgba(200,60,180,.1)"/>
+              <circle cx="40" cy="40" r="12" fill="rgba(200,60,180,.35)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Social Media</p>
+          <p class="pi-title">Ramadan Campaign — Content Pack</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+      <div class="pi" data-c="sports">
+        <div class="pi-bg pb6">
+          <div class="pi-deco">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="40" r="30" stroke="rgba(212,168,67,.5)" stroke-width="1.5"/>
+              <path d="M28 40 Q40 22 52 40 Q40 58 28 40Z" fill="rgba(212,168,67,.25)"/>
+              <circle cx="40" cy="40" r="8" fill="rgba(212,168,67,.5)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Sports Poster</p>
+          <p class="pi-title">Marathon Race Day — Event Visual</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+      <div class="pi" data-c="branding">
+        <div class="pi-bg pb7">
+          <div class="pi-deco">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <path d="M40 12 L60 28 V60 H20 V28Z" stroke="rgba(100,140,255,.55)" stroke-width="1.5" fill="rgba(100,140,255,.08)"/>
+              <rect x="30" y="45" width="20" height="15" fill="rgba(100,140,255,.3)"/>
+              <circle cx="40" cy="26" r="7" fill="rgba(100,140,255,.4)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Branding</p>
+          <p class="pi-title">Real Estate Agency — Visual Identity</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+      <div class="pi" data-c="video">
+        <div class="pi-bg pb8">
+          <div class="pi-deco">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <rect x="12" y="24" width="40" height="28" rx="6" stroke="rgba(220,100,160,.5)" stroke-width="1.5" fill="rgba(220,100,160,.08)"/>
+              <path d="M52 34 L68 28 V52 L52 46Z" fill="rgba(220,100,160,.3)" stroke="rgba(220,100,160,.5)" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Video Content</p>
+          <p class="pi-title">Product Showcase — AI-Enhanced Reel</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+      <div class="pi" data-c="social">
+        <div class="pi-bg pb9">
+          <div class="pi-deco">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="40" r="28" stroke="rgba(0,180,200,.45)" stroke-width="1.5"/>
+              <circle cx="40" cy="40" r="17" stroke="rgba(0,180,200,.35)" stroke-width="1"/>
+              <circle cx="40" cy="40" r="6" fill="rgba(0,180,200,.55)"/>
+              <line x1="40" y1="12" x2="40" y2="22" stroke="rgba(0,180,200,.4)" stroke-width="1.5"/>
+              <line x1="40" y1="58" x2="40" y2="68" stroke="rgba(0,180,200,.4)" stroke-width="1.5"/>
+              <line x1="12" y1="40" x2="22" y2="40" stroke="rgba(0,180,200,.4)" stroke-width="1.5"/>
+              <line x1="58" y1="40" x2="68" y2="40" stroke="rgba(0,180,200,.4)" stroke-width="1.5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pi-over"><div class="pi-glass">
+          <p class="pi-cat">Social Media</p>
+          <p class="pi-title">Tech Startup — Launch Week Posts</p>
+          <a href="#" class="pi-view">View <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES
+     ============================================================ -->
+<section id="services" class="section">
+  <div class="wrap">
+    <p class="label rev">What I Offer</p>
+    <h2 class="h2 rev rd1">Services Built to <span class="grad-text">Elevate Brands</span></h2>
+
+    <div class="services-grid">
+      <div class="svc-card c-gold rev rd1">
+        <div class="svc-icon ig">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <h3 class="svc-title">Social Media Design</h3>
+        <p class="svc-desc">Scroll-stopping graphics tailored for every platform — Instagram, Facebook, TikTok, and beyond. Content packs, story templates, and full campaign visuals that make your brand unmissable.</p>
+        <div class="svc-tags">
+          <span class="svc-tag svc-tag-g">Posts & Stories</span>
+          <span class="svc-tag svc-tag-g">Content Packs</span>
+          <span class="svc-tag svc-tag-g">Campaign Visuals</span>
+        </div>
+      </div>
+
+      <div class="svc-card c-blue rev rd2">
+        <div class="svc-icon ib">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <h3 class="svc-title">Video Editing & Reels</h3>
+        <p class="svc-desc">Cinematic video edits that tell your brand's story with power. From short-form social reels to full promotional videos, I blend sharp cuts, music sync, and motion graphics into compelling narratives.</p>
+        <div class="svc-tags">
+          <span class="svc-tag svc-tag-b">Reels & Shorts</span>
+          <span class="svc-tag svc-tag-b">Promo Videos</span>
+          <span class="svc-tag svc-tag-b">Motion Graphics</span>
+        </div>
+      </div>
+
+      <div class="svc-card c-rose rev rd3">
+        <div class="svc-icon ir">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="svc-title">Branding & Posters</h3>
+        <p class="svc-desc">Full brand identity systems — logos, color palettes, typography, and visual guidelines — plus high-impact event posters and sports graphics that command attention and drive action.</p>
+        <div class="svc-tags">
+          <span class="svc-tag svc-tag-r">Brand Identity</span>
+          <span class="svc-tag svc-tag-r">Sports Posters</span>
+          <span class="svc-tag svc-tag-r">Event Graphics</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Services highlight -->
+    <div style="margin-top:20px; padding:32px 36px; border-radius:var(--r); border:1px solid rgba(212,168,67,.2); background:linear-gradient(135deg,rgba(212,168,67,.06),rgba(59,130,246,.06)); display:flex; align-items:center; gap:32px; flex-wrap:wrap;" class="rev rd4">
+      <div style="flex:1;min-width:280px;">
+        <p class="label" style="margin-bottom:8px;">Bonus Capability</p>
+        <h3 style="font-family:var(--ff-display);font-size:22px;font-weight:900;margin-bottom:8px;">AI-Enhanced Visual Production</h3>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.7;">I leverage cutting-edge AI tools — image generators, upscalers, and creative automation — to push the boundaries of what's visually possible. The result: faster turnarounds, more creative options, and results that genuinely feel like the future.</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+        <span class="pill pill-g">Midjourney</span>
+        <span class="pill pill-b">Runway ML</span>
+        <span class="pill pill-r">Adobe Firefly</span>
+        <span class="pill pill-g">DALL·E</span>
+        <span class="pill pill-b">Topaz AI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ARTICLES
+     ============================================================ -->
+<section id="articles" class="section">
+  <div class="wrap">
+    <p class="label rev">Insights</p>
+    <h2 class="h2 rev rd1">From the <span class="grad-text">Design Desk</span></h2>
+    <p style="color:var(--text-mid);font-size:15px;max-width:450px;margin-bottom:52px;" class="rev rd2">Thoughts on design, brand communication, and where AI is taking visual creativity.</p>
+
+    <div class="art-grid">
+      <div class="art-card rev rd1">
+        <div class="art-n">01</div>
+        <span class="art-tag at-g">Brand Communication</span>
+        <h3 class="art-title">The Hidden Language of Color: Why Brands Fail Their Audience Visually</h3>
+        <p class="art-snip">Most brands choose colors they like, not colors that work. As someone with a background in both graphic production and communication theory, I break down the psychological and cultural dimensions of color that most designers overlook.</p>
+        <a href="#" class="read-more">Read Article <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="art-card rev rd2">
+        <div class="art-n">02</div>
+        <span class="art-tag at-b">AI & Design</span>
+        <h3 class="art-title">AI Is Not Replacing Designers — It's Filtering Out the Average Ones</h3>
+        <p class="art-snip">After integrating AI tools deeply into my daily workflow, I share the honest truth: what AI amplifies, what it can't replicate, and how to use it as creative fuel rather than a crutch. A field guide from the trenches.</p>
+        <a href="#" class="read-more">Read Article <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="art-card rev rd3">
+        <div class="art-n">03</div>
+        <span class="art-tag at-r">Video & Content</span>
+        <h3 class="art-title">Why Every Brand Needs a Signature Visual Tempo (And How to Find Yours)</h3>
+        <p class="art-snip">Great video content isn't just about shots and music — it's about pacing, rhythm, and the feeling it creates. Drawing from cinematic editing principles, I explain how to give your brand a visual heartbeat that audiences remember.</p>
+        <a href="#" class="read-more">Read Article <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FREE RESOURCES
+     ============================================================ -->
+<section id="resources" class="section">
+  <div class="wrap">
+    <div class="res-in">
+      <!-- Visual -->
+      <div class="res-vis rev">
+        <div class="res-chip rc1">✦ 200+ Palettes</div>
+        <div class="res-chip rc2">📐 Free Download</div>
+        <div class="res-mockup">
+          <div class="res-top">
+            <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+              <circle cx="36" cy="36" r="28" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+              <circle cx="24" cy="28" r="8" fill="#d4a843"/>
+              <circle cx="48" cy="28" r="8" fill="#3b82f6"/>
+              <circle cx="24" cy="48" r="8" fill="#e8506a"/>
+              <circle cx="48" cy="48" r="8" fill="#34d399"/>
+              <circle cx="36" cy="38" r="6" fill="rgba(255,255,255,.92)"/>
+            </svg>
+          </div>
+          <div class="res-body">
+            <p class="res-body-t">Brand Color Guide</p>
+            <p class="res-body-s">By Hossam Srf  Srf  · 48 pages · Free PDF</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="res-text rev rd2">
+        <p class="label">Free Download</p>
+        <h2 class="h2">The <span class="grad-text">Brand Color Guide</span><br>by Hossam Srf  Srf </h2>
+        <p class="res-desc">My curated collection of 200+ color palettes, built from years of working across branding, social media, and event design. Includes color psychology breakdowns, industry-specific palettes, and real brand case studies — completely free.</p>
+
+        <div class="res-feats">
+          <div class="res-feat"><div class="res-feat-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>200+ hand-curated palettes across 12 industries</div>
+          <div class="res-feat"><div class="res-feat-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Color psychology &amp; emotional impact guide</div>
+          <div class="res-feat"><div class="res-feat-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>HEX, RGB &amp; CMYK codes included</div>
+          <div class="res-feat"><div class="res-feat-ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Real-world brand case studies</div>
+        </div>
+
+        <form class="dl-form" id="dlf">
+          <input type="email" class="em-in" placeholder="Enter your email" required>
+          <button type="submit" class="dl-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Free
+          </button>
+        </form>
+        <div class="dl-ok" id="dlo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Check your inbox — the guide is on its way!
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-in">
+      <div class="foot-brand">
+        <a href="#hero" class="logo">Hossam Visauls</a>
+        <p>Strategic communication meets cutting-edge visual art. Hossam Srf  Srf  creates graphic design, video content, and AI-enhanced visuals that build the future of your brand.</p>
+      </div>
+
+      <div>
+        <p class="foot-head">Navigate</p>
+        <div class="foot-links">
+          <a href="#hero">Home</a>
+          <a href="#about">About</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#services">Services</a>
+          <a href="#articles">Articles</a>
+          <a href="#resources">Free Resources</a>
+        </div>
+      </div>
+
+      <div>
+        <p class="foot-head">Contact</p>
+        <div class="foot-contact">
+          <a href="mailto:hossamessarraf23@gmail.com
+  Srf .design">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>
+           hossamessarraf23@gmail.com
+ Srf  Srf .design
+          </a>
+          <a href="#">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            @Hossam Srf  Srf .design
+          </a>
+          <a href="#">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Available Worldwide · Remote
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <p class="foot-copy">© 2025 Hossam Srf  Srf . All rights reserved. Crafted with intention.</p>
+      <div class="socials">
+        <a href="#" class="sl" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="sl" aria-label="Behance">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988H0V5.021h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zM3 11h3.584c2.508 0 2.906-3-.312-3H3v3zm3.391 3H3v3.016h3.341c3.055 0 2.868-3.016.05-3.016z"/></svg>
+        </a>
+        <a href="#" class="sl" aria-label="LinkedIn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="#" class="sl" aria-label="Twitter/X">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" class="sl" aria-label="YouTube">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* --- Cursor --- */
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+});
+(function loop(){ rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(loop); })();
+
+/* --- Sticky nav --- */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled',scrollY>24); });
+
+/* --- Hamburger --- */
+const burger=document.getElementById('burger');
+const mobNav=document.getElementById('mob-nav');
+let mOpen=false;
+burger.addEventListener('click',()=>{
+  mOpen=!mOpen;
+  burger.classList.toggle('open',mOpen);
+  mobNav.classList.toggle('open',mOpen);
+});
+function closeNav(){ mOpen=false; burger.classList.remove('open'); mobNav.classList.remove('open'); }
+
+/* --- Portfolio filter --- */
+const fbs=document.querySelectorAll('.fb');
+const pis=document.querySelectorAll('.pi');
+
+fbs.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    fbs.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.f;
+    pis.forEach(pi=>{
+      const show = f==='all' || pi.dataset.c===f;
+      if(show){
+        pi.style.display='';
+        pi.style.animation='fadeUp .45s ease forwards';
+      } else {
+        pi.style.display='none';
+      }
+    });
+  });
+});
+
+/* Add fadeUp keyframe */
+const ks=document.createElement('style');
+ks.textContent='@keyframes fadeUp{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}';
+document.head.appendChild(ks);
+
+/* --- Scroll reveal --- */
+const revEls=document.querySelectorAll('.rev');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vis'); obs.unobserve(e.target); } });
+},{threshold:.1});
+revEls.forEach(el=>obs.observe(el));
+
+/* --- Download form --- */
+document.getElementById('dlf').addEventListener('submit',e=>{
+  e.preventDefault();
+  const btn=e.target.querySelector('.dl-btn');
+  btn.textContent='Sending…'; btn.disabled=true;
+  setTimeout(()=>{
+    document.getElementById('dlf').style.display='none';
+    document.getElementById('dlo').style.display='flex';
+  },1400);
+});
+
+/* --- Active nav on scroll --- */
+const secs=[...document.querySelectorAll('section[id],footer[id]')];
+const nAs=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{ if(scrollY>=s.offsetTop-130) cur=s.id; });
+  nAs.forEach(a=>{ a.style.color=''; if(a.getAttribute('href')==='#'+cur) a.style.color='var(--text)'; });
+});
+</script>
+</body>
+</html>
