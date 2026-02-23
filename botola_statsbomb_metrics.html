@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Botola Pro · StatsBomb Metrics</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f5f4f0;font-family:'Barlow',sans-serif;padding:24px 16px 40px;color:#1a1a2e}
+.page{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+/* Header */
+.hdr{background:#1a1a2e;color:#fff;padding:16px 20px;border-radius:8px;
+  display:flex;justify-content:space-between;align-items:center}
+.hdr-left h1{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;
+  letter-spacing:.5px;color:#fff}
+.hdr-left p{font-size:11px;color:#8892a4;margin-top:2px}
+.hdr-right{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:#8892a4;
+  text-align:right;line-height:1.6}
+.dot-sb{width:10px;height:10px;border-radius:50%;background:#e8533d;
+  display:inline-block;margin-right:4px}
+
+/* Two-col layout */
+.two-col{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}
+.panel{background:#fff;border-radius:8px;padding:16px;border:1px solid #e2e0db}
+.panel-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:#6b7280;
+  margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #e8e6e1}
+
+/* Selector */
+.selector{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.sel-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;
+  padding:4px 10px;border-radius:4px;border:1px solid #d1cfc9;
+  background:#f5f4f0;color:#374151;cursor:pointer;transition:all .15s}
+.sel-btn:hover,.sel-btn.active{background:#1a1a2e;color:#fff;border-color:#1a1a2e}
+
+/* Radar */
+#radarWrap{position:relative;width:268px;height:268px;margin:0 auto}
+#radarCanvas{width:268px;height:268px}
+.radar-player-info{text-align:center;margin-top:10px}
+.radar-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#1a1a2e}
+.radar-team{font-size:11px;color:#6b7280;margin-top:1px}
+
+/* Scatter */
+#scatterWrap{position:relative}
+#scatterCanvas{width:100%;height:300px;display:block}
+
+/* Classification grid */
+.class-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.class-card{background:#fff;border-radius:8px;padding:14px;border:1px solid #e2e0db}
+.class-card-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:#fff;padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:10px}
+.class-item{font-size:12px;color:#374151;padding:3px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid #f3f2ef}
+.class-item:last-child{border-bottom:none}
+.class-score{font-family:'Barlow Condensed',sans-serif;font-size:13px;
+  font-weight:700;color:#1a1a2e}
+
+/* Metric legend */
+.metric-list{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.m-item{font-size:10px;color:#6b7280;display:flex;align-items:center;gap:5px}
+.m-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Header -->
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>Botola Pro 2025/26 · AMF/Forward Profile Analysis</h1>
+    <p>StatsBomb radar metrics · 15 Forwards · Normalized values (0–1 scale)</p>
+  </div>
+  <div class="hdr-right">
+    <span class="dot-sb"></span>StatsBomb Method<br>
+    <span style="color:#e8c84a">■</span> xG · OBV · Shooting · Creation · Defense
+  </div>
+</div>
+
+<!-- Row 1: Radar + Scatter -->
+<div class="two-col">
+
+  <!-- Radar panel -->
+  <div class="panel">
+    <div class="panel-title">Player Radar — Click to Compare</div>
+    <div class="selector" id="selectorA"></div>
+    <div id="radarWrap"><canvas id="radarCanvas" width="268" height="268"></canvas></div>
+    <div class="radar-player-info">
+      <div class="radar-name" id="radarName">Select a player</div>
+      <div class="radar-team" id="radarTeam"></div>
+    </div>
+    <div style="margin-top:12px">
+      <div class="panel-title" style="margin-bottom:8px">Metrics</div>
+      <div class="metric-list" id="metricLegend"></div>
+    </div>
+  </div>
+
+  <!-- Scatter panel -->
+  <div class="panel">
+    <div class="panel-title">OBV vs. xG — Creation × Finishing Classification</div>
+    <canvas id="scatterCanvas" width="580" height="300"></canvas>
+    <div style="margin-top:10px;font-size:10px;color:#9ca3af;line-height:1.7">
+      <b style="color:#374151">X-axis:</b> Dribble+Carry OBV (prog.runs + dribbles) · 
+      <b style="color:#374151">Y-axis:</b> xG per 90 (npxG) · 
+      Quadrant lines at dataset medians · Hover points for details
+    </div>
+  </div>
+</div>
+
+<!-- Row 2: Classification cards -->
+<div style="background:#fff;border-radius:8px;padding:16px;border:1px solid #e2e0db">
+  <div class="panel-title">Player Classification by Profile</div>
+  <div class="class-grid" id="classGrid"></div>
+</div>
+
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+// Mapping StatsBomb radar metrics from available normalized stats:
+// xG           = npxG per 90
+// xG/Shot      = npxG per shot
+// Shots        = Shots per 90
+// Shot OBV     = Shot assists per 90 (value from shots creating actions)
+// Touches InBox= Touches in box per 90
+// Turnovers    = 1 - Accurate short/medium passes % (inverted: more error = more turnovers)
+// Fouls Won    = Fouls suffered per 90
+// Drib+CarryOBV= avg(Progressive runs per 90, Successful dribbles %)
+// OpenPlay xGA = xA per 90
+// Pass OBV     = avg(Progressive passes per 90, Accurate passes %)
+// PAdj Press   = Successful defensive actions per 90
+
+const raw = [
+  {n:"B. Ilou",     t:"Hassania Agadir",   npxG:.667,npxGshot:.200,shots:.333,shotOBV:.800,box:.467,turn:.733,foulsW:.333,dribCarry:.467,xGA:.567,passOBV:.600,press:.533},
+  {n:"A. Mouloua",  t:"FUS Rabat",         npxG:.867,npxGshot:.533,shots:.333,shotOBV:.933,box:.933,turn:.867,foulsW:.267,dribCarry:.467,xGA:.867,passOBV:.440,press:.067},
+  {n:"S. Benjdida", t:"Maghreb Fès",       npxG:1.00,npxGshot:.533,shots:.867,shotOBV:.067,box:.400,turn:.200,foulsW:.333,dribCarry:.433,xGA:.067,passOBV:.600,press:.267},
+  {n:"R. Dacosta",  t:"Difaâ El Jadida",   npxG:.467,npxGshot:.933,shots:.133,shotOBV:.200,box:.200,turn:.667,foulsW:.400,dribCarry:.800,xGA:.700,passOBV:.650,press:.333},
+  {n:"H. Hannouri", t:"Wydad Casablanca",  npxG:.733,npxGshot:.167,shots:.600,shotOBV:.133,box:.733,turn:.333,foulsW:.733,dribCarry:.617,xGA:.167,passOBV:.567,press:.133},
+  {n:"Z. Bahrou",   t:"Khemis Zemamra",    npxG:.133,npxGshot:.267,shots:.267,shotOBV:.633,box:.267,turn:.600,foulsW:.467,dribCarry:.133,xGA:.333,passOBV:.433,press:.933},
+  {n:"M. Balouk",   t:"Yacoub El Mansour", npxG:.933,npxGshot:.867,shots:.800,shotOBV:.633,box:.667,turn:.467,foulsW:.200,dribCarry:.300,xGA:.800,passOBV:.300,press:.733},
+  {n:"I. Khafi",    t:"Raja Casablanca",   npxG:.800,npxGshot:.600,shots:.467,shotOBV:.400,box:1.00,turn:.533,foulsW:.667,dribCarry:.283,xGA:.167,passOBV:.467,press:.400},
+  {n:"J. Ghabra",   t:"Ittihad Tanger",    npxG:.333,npxGshot:.400,shots:.200,shotOBV:.867,box:.867,turn:.067,foulsW:.800,dribCarry:.700,xGA:.333,passOBV:.710,press:.800},
+  {n:"M. Sahd",     t:"CODM Meknès",       npxG:.200,npxGshot:.200,shots:1.00,shotOBV:.733,box:.600,turn:0,foulsW:.933,dribCarry:.417,xGA:.933,passOBV:.600,press:.467},
+  {n:"H. El Bahja", t:"Ittihad Tanger",    npxG:.400,npxGshot:.333,shots:.667,shotOBV:.467,box:.800,turn:.400,foulsW:.133,dribCarry:.617,xGA:.567,passOBV:.630,press:.667},
+  {n:"A. Benaadi",  t:"Olympique Dcheïra", npxG:.267,npxGshot:.133,shots:.600,shotOBV:1.00,box:.133,turn:.133,foulsW:.067,dribCarry:1.00,xGA:1.00,passOBV:.780,press:.600},
+  {n:"R. Abardi",   t:"Olympique Dcheïra", npxG:.600,npxGshot:.667,shots:.133,shotOBV:.333,box:.533,turn:.800,foulsW:.600,dribCarry:.600,xGA:.467,passOBV:.330,press:.200},
+  {n:"I. Khannouss",t:"CODM Meknès",       npxG:.067,npxGshot:.067,shots:.067,shotOBV:.267,box:.067,turn:.933,foulsW:.533,dribCarry:.757,xGA:.333,passOBV:.720,press:1.00},
+  {n:"Y. Bammou",   t:"UTS Rabat",         npxG:.533,npxGshot:.467,shots:.733,shotOBV:.533,box:.333,turn:.267,foulsW:1.00,dribCarry:.400,xGA:.700,passOBV:.440,press:.867},
+];
+
+const METRICS = [
+  {key:"npxG",      label:"xG / 90",           color:"#e8533d"},
+  {key:"npxGshot",  label:"xG / Shot",          color:"#f7a543"},
+  {key:"shots",     label:"Shots / 90",         color:"#f7c94a"},
+  {key:"shotOBV",   label:"Shot OBV",           color:"#a8e063"},
+  {key:"box",       label:"Touches In Box",     color:"#3fb950"},
+  {key:"turn",      label:"Low Turnovers",      color:"#38bdf8"},
+  {key:"foulsW",    label:"Fouls Won",          color:"#818cf8"},
+  {key:"dribCarry", label:"Dribble+Carry OBV",  color:"#c084fc"},
+  {key:"xGA",       label:"Open Play xGA",      color:"#f472b6"},
+  {key:"passOBV",   label:"Pass OBV",           color:"#34d399"},
+  {key:"press",     label:"PAdj Pressures",     color:"#64748b"},
+];
+
+// ── METRIC LEGEND ─────────────────────────────────────────────────────────────
+const mlEl = document.getElementById('metricLegend');
+METRICS.forEach(m => {
+  mlEl.innerHTML += `<div class="m-item"><div class="m-dot" style="background:${m.color}"></div>${m.label}</div>`;
+});
+
+// ── SELECTOR ─────────────────────────────────────────────────────────────────
+let activeIdx = 0;
+const selEl = document.getElementById('selectorA');
+raw.forEach((p,i) => {
+  const b = document.createElement('button');
+  b.className = 'sel-btn' + (i===0?' active':'');
+  b.textContent = p.n.split(' ')[1] || p.n;
+  b.onclick = () => { activeIdx=i; drawRadar(i); document.querySelectorAll('.sel-btn').forEach((x,j)=>x.classList.toggle('active',j===i)); };
+  selEl.appendChild(b);
+});
+
+// ── RADAR ─────────────────────────────────────────────────────────────────────
+const radarCanvas = document.getElementById('radarCanvas');
+const rc = radarCanvas.getContext('2d');
+
+function drawRadar(idx){
+  const p = raw[idx];
+  document.getElementById('radarName').textContent = p.n;
+  document.getElementById('radarTeam').textContent = p.t;
+
+  const W=268, H=268, cx=134, cy=140, R=108;
+  rc.clearRect(0,0,W,H);
+
+  const n = METRICS.length;
+  const angleStep = (2*Math.PI)/n;
+  const startAngle = -Math.PI/2;
+
+  // Grid rings
+  [0.2,0.4,0.6,0.8,1.0].forEach(r => {
+    rc.beginPath();
+    for(let i=0;i<n;i++){
+      const a = startAngle + i*angleStep;
+      const x = cx + Math.cos(a)*R*r;
+      const y = cy + Math.sin(a)*R*r;
+      i===0 ? rc.moveTo(x,y) : rc.lineTo(x,y);
+    }
+    rc.closePath();
+    rc.strokeStyle = r===1.0 ? '#d1cfc9' : '#e8e6e1';
+    rc.lineWidth = r===1.0 ? 1.2 : 0.7;
+    rc.stroke();
+  });
+
+  // Spokes + labels
+  METRICS.forEach((m,i) => {
+    const a = startAngle + i*angleStep;
+    const ex = cx + Math.cos(a)*R;
+    const ey = cy + Math.sin(a)*R;
+    rc.beginPath(); rc.moveTo(cx,cy); rc.lineTo(ex,ey);
+    rc.strokeStyle='#d1cfc9'; rc.lineWidth=0.7; rc.stroke();
+
+    const lx = cx + Math.cos(a)*(R+16);
+    const ly = cy + Math.sin(a)*(R+16);
+    rc.font = '600 8.5px Barlow Condensed, sans-serif';
+    rc.fillStyle = '#6b7280';
+    rc.textAlign = 'center'; rc.textBaseline = 'middle';
+    // Break long labels
+    const words = m.label.split(' ');
+    if(words.length>2){
+      rc.fillText(words.slice(0,2).join(' '), lx, ly-5);
+      rc.fillText(words.slice(2).join(' '), lx, ly+5);
+    } else { rc.fillText(m.label, lx, ly); }
+  });
+
+  // Filled polygon — red (like StatsBomb)
+  const vals = METRICS.map(m => p[m.key]);
+  rc.beginPath();
+  vals.forEach((v,i) => {
+    const a = startAngle + i*angleStep;
+    const x = cx + Math.cos(a)*R*v;
+    const y = cy + Math.sin(a)*R*v;
+    i===0 ? rc.moveTo(x,y) : rc.lineTo(x,y);
+  });
+  rc.closePath();
+  rc.fillStyle = 'rgba(232,83,61,0.55)';
+  rc.fill();
+  rc.strokeStyle = '#e8533d';
+  rc.lineWidth = 1.8;
+  rc.stroke();
+
+  // Yellow inner fill (like StatsBomb dual-layer)
+  rc.beginPath();
+  vals.forEach((v,i) => {
+    const a = startAngle + i*angleStep;
+    const fv = v * 0.55; // inner layer at ~55%
+    const x = cx + Math.cos(a)*R*fv;
+    const y = cy + Math.sin(a)*R*fv;
+    i===0 ? rc.moveTo(x,y) : rc.lineTo(x,y);
+  });
+  rc.closePath();
+  rc.fillStyle = 'rgba(232,200,74,0.5)';
+  rc.fill();
+  rc.strokeStyle = '#e8c84a';
+  rc.lineWidth = 1;
+  rc.stroke();
+
+  // Dots
+  vals.forEach((v,i) => {
+    const a = startAngle + i*angleStep;
+    const x = cx + Math.cos(a)*R*v;
+    const y = cy + Math.sin(a)*R*v;
+    rc.beginPath(); rc.arc(x,y,3,0,2*Math.PI);
+    rc.fillStyle='#1a1a2e'; rc.fill();
+  });
+}
+drawRadar(0);
+
+// ── SCATTER ──────────────────────────────────────────────────────────────────
+const sc = document.getElementById('scatterCanvas');
+const sCtx = sc.getContext('2d');
+const SW = sc.width, SH = sc.height;
+const PAD = {l:36,r:16,t:20,b:36};
+const PW = SW-PAD.l-PAD.r, PH = SH-PAD.t-PAD.b;
+
+// X = dribCarry OBV, Y = npxG
+const medX = [...raw].sort((a,b)=>a.dribCarry-b.dribCarry)[Math.floor(raw.length/2)].dribCarry;
+const medY = [...raw].sort((a,b)=>a.npxG-b.npxG)[Math.floor(raw.length/2)].npxG;
+
+function toSX(v){ return PAD.l + v*PW; }
+function toSY(v){ return PAD.t + (1-v)*PH; }
+
+function drawScatter(){
+  sCtx.clearRect(0,0,SW,SH);
+
+  // Background quadrants
+  const mx = toSX(medX), my = toSY(medY);
+  const quads=[
+    {x:PAD.l,y:PAD.t,w:mx-PAD.l,h:my-PAD.t,c:'rgba(252,165,165,0.08)',lbl:'Low Carry, High xG\n(Poacher)'},
+    {x:mx,y:PAD.t,w:PAD.l+PW-mx,h:my-PAD.t,c:'rgba(134,239,172,0.1)',lbl:'High Carry, High xG\n(Complete Fwd)'},
+    {x:PAD.l,y:my,w:mx-PAD.l,h:PAD.t+PH-my,c:'rgba(148,163,184,0.07)',lbl:'Low Carry, Low xG\n(Support/Defensive)'},
+    {x:mx,y:my,w:PAD.l+PW-mx,h:PAD.t+PH-my,c:'rgba(251,191,36,0.08)',lbl:'High Carry, Low xG\n(Ball Carrier)'},
+  ];
+  quads.forEach(q => {
+    sCtx.fillStyle=q.c; sCtx.fillRect(q.x,q.y,q.w,q.h);
+    const lines=q.lbl.split('\n');
+    sCtx.font='600 9px Barlow Condensed,sans-serif';
+    sCtx.fillStyle='rgba(100,116,139,0.6)';
+    sCtx.textBaseline='top'; sCtx.textAlign='left';
+    const tx = q.x+5, ty=q.y+5;
+    lines.forEach((l,i)=>sCtx.fillText(l,tx,ty+i*11));
+  });
+
+  // Median lines
+  sCtx.setLineDash([4,4]);
+  sCtx.strokeStyle='#d1cfc9'; sCtx.lineWidth=1;
+  sCtx.beginPath(); sCtx.moveTo(mx,PAD.t); sCtx.lineTo(mx,PAD.t+PH); sCtx.stroke();
+  sCtx.beginPath(); sCtx.moveTo(PAD.l,my); sCtx.lineTo(PAD.l+PW,my); sCtx.stroke();
+  sCtx.setLineDash([]);
+
+  // Axes
+  sCtx.strokeStyle='#9ca3af'; sCtx.lineWidth=1;
+  sCtx.beginPath(); sCtx.moveTo(PAD.l,PAD.t); sCtx.lineTo(PAD.l,PAD.t+PH); sCtx.stroke();
+  sCtx.beginPath(); sCtx.moveTo(PAD.l,PAD.t+PH); sCtx.lineTo(PAD.l+PW,PAD.t+PH); sCtx.stroke();
+
+  // Axis labels
+  sCtx.font='500 9px Barlow,sans-serif'; sCtx.fillStyle='#6b7280';
+  sCtx.textAlign='center'; sCtx.textBaseline='top';
+  sCtx.fillText('Dribble & Carry OBV (normalized)', PAD.l+PW/2, PAD.t+PH+6);
+  sCtx.save(); sCtx.translate(10, PAD.t+PH/2); sCtx.rotate(-Math.PI/2);
+  sCtx.textAlign='center'; sCtx.textBaseline='middle';
+  sCtx.fillText('xG per 90', 0, 0); sCtx.restore();
+
+  // Dots
+  const COLORS=['#e8533d','#f7a543','#3fb950','#38bdf8','#818cf8','#c084fc',
+                '#f472b6','#34d399','#64748b','#a78bfa','#fb923c','#4ade80',
+                '#22d3ee','#f59e0b','#ec4899'];
+  raw.forEach((p,i) => {
+    const x=toSX(p.dribCarry), y=toSY(p.npxG);
+    sCtx.beginPath(); sCtx.arc(x,y,7,0,2*Math.PI);
+    sCtx.fillStyle=COLORS[i]; sCtx.fill();
+    sCtx.strokeStyle='#fff'; sCtx.lineWidth=1.5; sCtx.stroke();
+
+    // Label (abbreviated)
+    sCtx.font='600 8px Barlow Condensed,sans-serif';
+    sCtx.fillStyle='#1a1a2e'; sCtx.textAlign='center'; sCtx.textBaseline='bottom';
+    sCtx.fillText(p.n.split('.')[1]?.trim().substring(0,7) || p.n.substring(0,7), x, y-9);
+  });
+}
+drawScatter();
+
+// ── CLASSIFICATION ────────────────────────────────────────────────────────────
+// Score each player per profile:
+// Complete Forward: high across xG, shots, box, dribCarry, xGA
+// Chance Creator: high shotOBV, xGA, passOBV, foulsW
+// Ball Carrier: high dribCarry, shotOBV, turn, press
+// Poacher/Finisher: high npxG, npxGshot, shots, box (low creation)
+
+function score(p, keys){ return keys.reduce((s,k)=>s+p[k],0)/keys.length; }
+
+const profiles = [
+  {
+    label:"⚡ Complete Forward",
+    color:"#16a34a",
+    desc:"xG + Box + Carry + Creation",
+    keys:["npxG","shots","box","dribCarry","xGA"],
+  },
+  {
+    label:"🎯 Pure Finisher",
+    color:"#e8533d",
+    desc:"High xG, xG/Shot, Shots, Box",
+    keys:["npxG","npxGshot","shots","box"],
+  },
+  {
+    label:"🔑 Chance Creator",
+    color:"#7c3aed",
+    desc:"Shot OBV, Pass OBV, xGA, Fouls",
+    keys:["shotOBV","xGA","passOBV","foulsW"],
+  },
+  {
+    label:"🚀 Ball Carrier",
+    color:"#d97706",
+    desc:"Dribble+Carry OBV, Pressures",
+    keys:["dribCarry","press","shotOBV","turn"],
+  },
+];
+
+const classGrid = document.getElementById('classGrid');
+profiles.forEach(prof => {
+  const ranked = raw.map(p=>({...p,s:score(p,prof.keys)}))
+    .sort((a,b)=>b.s-a.s).slice(0,4);
+  let rows = ranked.map(p=>`
+    <div class="class-item">
+      <span>${p.n}</span>
+      <span class="class-score">${Math.round(p.s*100)}</span>
+    </div>`).join('');
+  classGrid.innerHTML += `
+    <div class="class-card">
+      <div class="class-card-title" style="background:${prof.color}">${prof.label}</div>
+      <div style="font-size:10px;color:#9ca3af;margin-bottom:8px">${prof.desc}</div>
+      ${rows}
+    </div>`;
+});
+</script>
+</body>
+</html>
